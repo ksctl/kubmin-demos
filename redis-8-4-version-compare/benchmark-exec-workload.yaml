@@ -1,0 +1,38 @@
+---
+# Continuous Benchmark for Redis
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: benchmark-app
+  labels:
+    app: benchmark-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: benchmark-app
+  template:
+    metadata:
+      labels:
+        app: benchmark-app
+        kubmin.ksctl.com/workload: "true"
+    spec:
+      containers:
+        - name: benchmark
+          image: ghcr.io/dipankardas011/redis-8-4-0-vs-8-2-1:v11.0.1 # https://redis.io/blog/redis-8-4-open-source-ga/
+          env:
+            - name: REDIS_HOST
+              value: "redis-service"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: WORKLOAD_SIZE
+              value: "1000000"
+            - name: CYCLE_INTERVAL_SECONDS
+              value: "300"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
