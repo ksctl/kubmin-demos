@@ -16,11 +16,39 @@ spec:
       labels:
         app: benchmark-app
         kubmin.ksctl.com/workload: "true"
+      annotations:
+        kubmin.ksctl.com/measure: |
+          version: 1
+          containers:
+            benchmark:
+              unit: redis-operation
+              scope: pod
+              metric: redis_benchmark_operations_total
+              match:
+                pod: $KUBMIN_POD_NAME
     spec:
       containers:
         - name: benchmark
           image: ghcr.io/dipankardas011/redis-8-4-0-vs-8-2-1:v11.0.1 # https://redis.io/blog/redis-8-4-open-source-ga/
           env:
+            - name: OTEL_EXPORTER_OTLP_PROTOCOL
+              value: grpc
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: opentelemetry-collector.kubmin.svc.cluster.local:4317
+            - name: OTEL_SERVICE_NAME
+              value: redis-benchmark-client
+            - name: OTEL_SERVICE_VERSION
+              value: v11.0.1
+            - name: DEPLOYMENT_ENVIRONMENT_NAME
+              value: qa
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: REDIS_HOST
               value: "redis-service"
             - name: REDIS_PORT
