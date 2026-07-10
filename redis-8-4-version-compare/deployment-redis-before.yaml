@@ -13,10 +13,13 @@ spec:
     metadata:
       labels:
         app: redis-benchmark
-        kubmin.ksctl.com/green: "true"
         kubmin.ksctl.com/workload: "true"
       annotations:
-        kubmin.ksctl.com/measure-containers: cache@chr
+        kubmin.ksctl.com/measure: |
+          version: 1
+          containers:
+            cache:
+              unit: container-hour
     spec:
       containers:
         - name: cache
