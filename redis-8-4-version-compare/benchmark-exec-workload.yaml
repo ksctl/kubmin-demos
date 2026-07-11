@@ -29,12 +29,14 @@ spec:
     spec:
       containers:
         - name: benchmark
-          image: ghcr.io/dipankardas011/redis-8-4-0-vs-8-2-1:v11.0.1 # https://redis.io/blog/redis-8-4-open-source-ga/
+          image: ghcr.io/dipankardas011/redis-8-4-0-vs-8-2-1:v12.0.1 # https://redis.io/blog/redis-8-4-open-source-ga/
           env:
             - name: OTEL_EXPORTER_OTLP_PROTOCOL
               value: grpc
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: opentelemetry-collector.kubmin.svc.cluster.local:4317
+            - name: OTEL_EXPORTER_OTLP_INSECURE
+              value: "true"
             - name: OTEL_SERVICE_NAME
               value: redis-benchmark-client
             - name: OTEL_SERVICE_VERSION
