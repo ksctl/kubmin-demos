@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: cache
-          image: redis:8.2.1@sha256:5fa2edb1e408fa8235e6db8fab01d1afaaae96c9403ba67b70feceb8661e8621
+          image: redis:8.6.1@sha256:315270d166080f537bbdf1b489b603aaaa213cb55a544acfa51feb7481abb1c0
           ports:
             - containerPort: 6379
               name: redis
