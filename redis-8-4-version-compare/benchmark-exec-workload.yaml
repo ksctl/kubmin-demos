@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: benchmark
-          image: ghcr.io/dipankardas011/redis-8-4-0-vs-8-2-1:v12.0.1@sha256:cfb7ffe12c36101aa94bd784aeeb32b02a7398be31ef5efd45048cd8f88b852e # https://redis.io/blog/redis-8-4-open-source-ga/
+          image: ghcr.io/dipankardas011/redis-8-4-0-vs-8-2-1:v12.0.1@sha256:cfb7ffe12c36101aa94bd784aeeb32b02a7398be31ef5efd45048cd8f88b852e
           env:
             - name: OTEL_EXPORTER_OTLP_PROTOCOL
               value: grpc
